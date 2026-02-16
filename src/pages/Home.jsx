@@ -30,7 +30,7 @@ const Home = () => {
           <div className="input-section">
             <input
               type="text"
-              placeholder="Anything Else?"
+              placeholder="Please tell me about your query!"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
