@@ -145,7 +145,7 @@ const ChatPage = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Anything Else?"
           />
-          <button className="ask-btn" onClick={handleAsk}>
+          <button type="submit" className="ask-btn" onClick={handleAsk}>
             Ask
           </button>
           <button className="save-btn">Save</button>
