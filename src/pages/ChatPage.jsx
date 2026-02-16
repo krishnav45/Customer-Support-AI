@@ -143,7 +143,7 @@ const ChatPage = () => {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Anything Else?"
+            placeholder="Please tell me about your query!"
           />
           <button className="ask-btn" onClick={handleAsk}>
             Ask
