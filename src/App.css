@@ -66,13 +66,14 @@ body {
 
 /* PAST CONVERSATIONS BUTTON */
 .history-btn {
-  background: linear-gradient(to right, #9a7be7, #b19cd9);
+  background: rgb(215, 199, 244);;
   border: none;
   border-radius: 12px;
   padding: 14px;
-  color: white;
+  color: black;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
 }
 
 /* RIGHT SIDE MAIN */
@@ -197,6 +198,7 @@ body {
   background: #dcd6ea;   /* soft lavender like image */
   min-height: 100vh;
   padding: 40px 60px;
+  overflow-y: auto;
 }
 
 .history-title {
@@ -351,6 +353,7 @@ body {
 .stars span.active {
   color: gold;
 }
+
 
 
 @media (max-width: 1024px) {

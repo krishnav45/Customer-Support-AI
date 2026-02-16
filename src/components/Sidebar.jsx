@@ -1,16 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="sidebar">
 
-      <div className="logo-section"
-        onClick={() => navigate("/")}
-        style={{ cursor: "pointer" }}
-      >
+      {/* New Query Link */}
+      <Link to="/" className="logo-section" style={{ textDecoration: "none", color: "inherit" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img
             src="newchat.8638cbe1684b4a30a532.png"
@@ -22,16 +18,14 @@ const Sidebar = () => {
           </span>
         </div>
 
-        <span style={{ fontSize: "20px", cursor: "pointer" }}>＋</span>
-      </div>
+        <span style={{ fontSize: "20px" }}>＋</span>
+      </Link>
 
       <div className="sidebar-content">
-        <button
-          className="history-btn"
-          onClick={() => navigate("/history")}
-        >
+        {/* Past Conversations Link */}
+        <Link to="/history" className="history-btn">
           Past Conversations
-        </button>
+        </Link>
       </div>
 
     </div>

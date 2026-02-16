@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 function ChatMessage({ message, updateRating }) {
   const { id, sender, text, time, rating = 0 } = message;
+  const [showModal, setShowModal] = useState(false);
+const [feedbackText, setFeedbackText] = useState("");
+const [submittedFeedback, setSubmittedFeedback] = useState("");
+
 
   const [showStars, setShowStars] = useState(rating > 0);
   const [hoverValue, setHoverValue] = useState(0);
@@ -39,8 +43,14 @@ function ChatMessage({ message, updateRating }) {
           <div className="feedback-section">
             <div className="feedback-icons">
               <span onClick={handleThumbUp}>👍</span>
-              <span>👎</span>
+              <span onClick={() => setShowModal(true)}>👎</span>
             </div>
+            {submittedFeedback && (
+  <p className="submitted-feedback">
+    <strong>Feedback:</strong> {submittedFeedback}
+  </p>
+)}
+
 
             {showStars && (
               <div className="stars">
@@ -60,6 +70,39 @@ function ChatMessage({ message, updateRating }) {
                 ))}
               </div>
             )}
+            {showModal && (
+  <div className="feedback-modal-overlay">
+    <div className="feedback-modal">
+      
+      <div className="modal-left">
+        <div className="modal-icon">📝</div>
+
+        <h3>Provide Additional Feedback</h3>
+
+        <textarea
+          placeholder="Enter your feedback here..."
+          value={feedbackText}
+          onChange={(e) => setFeedbackText(e.target.value)}
+        />
+      </div>
+
+      <div className="modal-right">
+        <button
+          className="submit-feedback-btn"
+          onClick={() => {
+            setSubmittedFeedback(feedbackText);
+            setFeedbackText("");
+            setShowModal(false);
+          }}
+        >
+          Submit
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
           </div>
         )}
       </div>
