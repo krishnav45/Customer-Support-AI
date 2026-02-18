@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import ChatMessage from "../components/ChatMessage";
 
 const ChatPage = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const clickedMessage = location.state?.message || "";
 
@@ -124,7 +125,8 @@ const ChatPage = () => {
 
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
 
       <div className="main-section">
         <Header />

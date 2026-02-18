@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-function ChatMessage({ message, updateRating }) {
-  const { id, sender, text, time, rating = 0 } = message;
+function ChatMessage({ message, updateRating, setMessages }) {
+  const { id, sender, text, time, rating = 0, feedback = "" } = message;
+
   const [showModal, setShowModal] = useState(false);
-const [feedbackText, setFeedbackText] = useState("");
-const [submittedFeedback, setSubmittedFeedback] = useState("");
-
-
-  const [showStars, setShowStars] = useState(rating > 0);
+  const [feedbackText, setFeedbackText] = useState("");
   const [hoverValue, setHoverValue] = useState(0);
+  const [showStars, setShowStars] = useState(rating > 0);
 
   const handleThumbUp = () => {
     setShowStars(true);
@@ -18,17 +16,31 @@ const [submittedFeedback, setSubmittedFeedback] = useState("");
     updateRating(id, value);
   };
 
+  const handleSubmitFeedback = () => {
+    if (!feedbackText.trim()) return;
+
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === id ? { ...msg, feedback: feedbackText } : msg
+      )
+    );
+
+    setFeedbackText("");
+    setShowModal(false);
+  };
+
   return (
     <div className={`chat-message ${sender === "user" ? "user-message" : "ai-message"}`}>
       
       <div className="avatar">
         <img
-          src={sender === "user" ? "/person.bbad1754e7b13b3db5db.png" : "/bot.a2bd3e5c8c207fae6835.png"}
+          src={sender === "user"
+            ? "/person.bbad1754e7b13b3db5db.png"
+            : "/bot.a2bd3e5c8c207fae6835.png"}
           alt="avatar"
         />
       </div>
 
-      {/* Message Content */}
       <div className="message-content">
         <div className="message-header">
           <strong>
@@ -37,30 +49,34 @@ const [submittedFeedback, setSubmittedFeedback] = useState("");
           <span className="time">{time}</span>
         </div>
 
-        <p className="message-text">{text}</p>
+        {/* VERY IMPORTANT: plain <p> for Cypress */}
+        <p>{text}</p>
 
         {sender === "ai" && (
           <div className="feedback-section">
+
             <div className="feedback-icons">
               <span onClick={handleThumbUp}>👍</span>
               <span onClick={() => setShowModal(true)}>👎</span>
             </div>
-            {submittedFeedback && (
-  <p className="submitted-feedback">
-    <strong>Feedback:</strong> {submittedFeedback}
-  </p>
-)}
 
+            {/* Show saved feedback from message object */}
+            {feedback && (
+              <p>
+                <strong>Feedback:</strong> {feedback}
+              </p>
+            )}
 
             {showStars && (
               <div className="stars">
-                <p style={{margin: 0, padding: 0, fontSize: "12px", fontWeight: 400,color: "black"}}>Rate this response:</p>
+                <p style={{ fontSize: "12px", margin: 0 }}>
+                  Rate this response:
+                </p>
+
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
                     key={star}
-                    className={
-                      star <= (hoverValue || rating) ? "active" : ""
-                    }
+                    className={star <= (hoverValue || rating) ? "active" : ""}
                     onClick={() => handleStarClick(star)}
                     onMouseEnter={() => setHoverValue(star)}
                     onMouseLeave={() => setHoverValue(0)}
@@ -70,38 +86,24 @@ const [submittedFeedback, setSubmittedFeedback] = useState("");
                 ))}
               </div>
             )}
+
             {showModal && (
-  <div className="feedback-modal-overlay">
-    <div className="feedback-modal">
-      
-      <div className="modal-left">
-        <div className="modal-icon">📝</div>
+              <div className="feedback-modal-overlay">
+                <div className="feedback-modal">
+                  <h3>Provide Additional Feedback</h3>
 
-        <h3>Provide Additional Feedback</h3>
+                  <textarea
+                    placeholder="Enter your feedback here..."
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
+                  />
 
-        <textarea
-          placeholder="Enter your feedback here..."
-          value={feedbackText}
-          onChange={(e) => setFeedbackText(e.target.value)}
-        />
-      </div>
-
-      <div className="modal-right">
-        <button
-          className="submit-feedback-btn"
-          onClick={() => {
-            setSubmittedFeedback(feedbackText);
-            setFeedbackText("");
-            setShowModal(false);
-          }}
-        >
-          Submit
-        </button>
-      </div>
-
-    </div>
-  </div>
-)}
+                  <button type="button" onClick={handleSubmitFeedback}>
+                    Submit
+                  </button>
+                </div>
+              </div>
+            )}
 
           </div>
         )}

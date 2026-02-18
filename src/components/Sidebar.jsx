@@ -1,9 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+<div className="close-btn" onClick={() => setSidebarOpen(false)}>
+  ✕
+</div>
+{sidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
+
 
       {/* New Query Link */}
       <Link to="/" className="logo-section" style={{ textDecoration: "none", color: "inherit" }}>
