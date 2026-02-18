@@ -21,24 +21,25 @@ const ChatPage = () => {
   };
 
   // AI Response Logic
-  const getAIResponse = (message) => {
-    switch (message) {
-      case "Hello":
-        return "Hello! How can I assist you today?";
+const getAIResponse = (message) => {
+  const cleanedMessage = message.trim().toLowerCase();
 
-      case "My order has not arrived yet.":
-        return "Please check your order status in the 'My Orders' section of your account. If the estimated delivery date has passed, kindly contact our support team with your order number.";
-
-      case "How can I reset my password?":
-        return "You can reset your password by clicking on 'Forgot Password' on the login page and following the instructions.";
-
-      case "I am unable to log in to my account.":
-        return "Ensure that you are using the correct email and password. If the issue persists, try resetting your password or clearing your browser cache.";
-
-      default:
-        return "Sorry, Did not understand your query!";
-    }
+  const responses = {
+    "hello": "Hello! How can I assist you today?",
+    "my order has not arrived yet.":
+      "Please check your order status in the 'My Orders' section of your account. If the estimated delivery date has passed, kindly contact our support team with your order number.",
+    "how can i reset my password?":
+      "You can reset your password by clicking on 'Forgot Password' on the login page and following the instructions.",
+    "i am unable to log in to my account.":
+      "Ensure that you are using the correct email and password. If the issue persists, try resetting your password or clearing your browser cache.",
   };
+
+  return (
+    responses[cleanedMessage] ||
+    "Sorry, Did not understand your query!"
+  );
+};
+
 
   // Initial Messages
   const [messages, setMessages] = useState(() => {

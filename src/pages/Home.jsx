@@ -2,9 +2,24 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import QuickReplies from "../components/QuickReplies";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState("");
+
+  const handleAsk = () => {
+  if (!query.trim()) return;
+
+  navigate("/chat", {
+    state: { message: query }
+  });
+
+  setQuery("");
+};
+
 
   return (
     <div className="app-container">
@@ -34,7 +49,7 @@ const Home = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button type="submit" className="ask-btn">Ask</button>
+            <button type="button" className="ask-btn" onClick={handleAsk}>Ask</button>
             <button className="save-btn" disabled>
               Save
             </button>
