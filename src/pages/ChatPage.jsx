@@ -156,10 +156,10 @@ const getAIResponse = (message) => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Anything Else?"
           />
-          <button type="submit" className="ask-btn" onClick={handleAsk}>
+          <button type="button" className="ask-btn" onClick={handleAsk}>
             Ask
           </button>
-          <button className="save-btn">Save</button>
+          <button type="button" className="save-btn">Save</button>
         </div>
       </div>
     </div>
