@@ -22,23 +22,31 @@ const ChatPage = () => {
 
   // AI Response Logic
 const getAIResponse = (message) => {
-  const cleanedMessage = message.trim().toLowerCase();
+  const text = message.trim().toLowerCase();
 
-  const responses = {
-    "hello": "Hello! How can I assist you today?",
-    "my order has not arrived yet.":
-      "Please check your order status in the 'My Orders' section of your account. If the estimated delivery date has passed, kindly contact our support team with your order number.",
-    "how can i reset my password?":
-      "You can reset your password by clicking on 'Forgot Password' on the login page and following the instructions.",
-    "i am unable to log in to my account.":
-      "Ensure that you are using the correct email and password. If the issue persists, try resetting your password or clearing your browser cache.",
-  };
+  if (text.includes("hello")) {
+    return "Hello! How can I assist you today?";
+  }
 
-  return (
-    responses[cleanedMessage] ||
-    "Sorry, Did not understand your query!"
-  );
+  if (text.includes("order")) {
+    return "Please check your order status in the 'My Orders' section of your account. If the estimated delivery date has passed, kindly contact our support team with your order number.";
+  }
+
+  if (text.includes("reset") && text.includes("password")) {
+    return "You can reset your password by clicking on 'Forgot Password' on the login page and following the instructions.";
+  }
+
+  if (text.includes("log in") || text.includes("login")) {
+    return "Ensure that you are using the correct email and password. If the issue persists, try resetting your password or clearing your browser cache.";
+  }
+
+  if (text.includes("contact") && text.includes("support")) {
+    return "You can contact our customer support via email at support@example.com or call us at +1-800-123-4567.";
+  }
+
+  return "Sorry, Did not understand your query!";
 };
+
 
 
   // Initial Messages
