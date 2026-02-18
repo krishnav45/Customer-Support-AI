@@ -49,7 +49,7 @@ const Home = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button type="button" className="ask-btn" onClick={handleAsk}>Ask</button>
+            <button type="submit" className="ask-btn" onClick={handleAsk}>Ask</button>
             <button className="save-btn" disabled>
               Save
             </button>
